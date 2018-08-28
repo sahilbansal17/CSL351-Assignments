@@ -14,7 +14,49 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Problem 1: Water-Jug problem:}
+We are given one jug full of water (8-pints) and two empty jugs of capacities 5- and 3-pints and our goal is to make 4 pints of water in one of the jugs by completely filling up and/or emptying jugs into others. 
+\\ \\ 
+This problem can be solved using \textbf{breadth first search} by making nodes of the graph as states containing the amount of water in each of the jugs. We can then move one level down in the graph by considering all the possibilites of transferring water from one jug to the other. We also keep track of visited states and don't move to the same states again and again. When we finally reach a state containing the desired amount of water in any of the jug, we can stop and by looking at the path taken from the starting state to this final state, we can tell the operations involved in doing so. 
+\\ \\ 
+Also, if we can't further go a level down as all possible states have been visited but we haven't reached the final state yet, then we can conclude that we can't make the desired amount in any one of the jugs.
+\\ 
+The following figure shows the solution for the given values:
+\begin{figure}[H]
+	\vspace{0pt}
+	\includegraphics[height = 200pt, keepaspectratio]{Snapshots/q1.png}
+\end{figure}  
 
+\begin{algorithm}[H]
+	\SetAlgoLined
+	// each state can be represented as pair of an integer \& another pair \\
+	// i.e. pair(x, pair(y, z)), let us denote it as \{x, y, z\} \\
+	// mark starting station as visited \\
+	$\{8,0,0\}.visited \gets true $ \;
+	$\{8,0,0\}.distance \gets 0 $ \;
+	$\{8,0,0\}.parent \gets NIL $\;
+	// create an empty queue for BFS \\
+	$Q \gets \phi $ \;
+	ENQUEUE(Q, s) \;
+	\While{$Q \neq \phi$}{
+		u = DEQUEUE(Q) \;
+		// let first, second, third denote the attributes \\
+		// for the state, representing qty in each jug \\
+		\If{$u.first == 4\  OR \ u.second == 4 \  OR \  u.third == 4$}{
+			// we have found the final state \\
+			break \;
+		}
+		\For{$each \ possible \  next \ state \ v \ from \ state \ u$}{
+			\If{v.visited equals false}{
+				$v.visited \gets true $ \;
+				$v.distance \gets u.distance + 1 $ \;
+				$v.parent \gets u$ \;
+				ENQUEUE(Q, v) \;
+			}
+		}
+	}
+	\caption{Water Jug problem using BFS}	
+\end{algorithm}
+After running this algorithm, we can follow the parent attributes of the possible final states (more than one final state is possible, since any of the 3 jugs can have 4 pints at the end), till we reach the source state, to know how the amount was transferred. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Problem 2: Euclid's Game:}
 In this game, intially there are two unequal numbers written on the board. There are two players, which take alternate turns. In each turn, a player has to write a positive number which is the difference of two numbers on the board, provided \textbf{this new number must not be already present on the board}. The player who cannot make a move loses the game. 
@@ -105,7 +147,7 @@ Now, he goes back alone to S2 and brings Goat also to S1 reaching the final stat
 To problem of starting from any point of Konigsberg and returning back to same point by crossing all seven bridges exactly once, can be transformed into a problem of visiting all the edges in the graph exactly once, starting and ending on the same node.
 \begin{figure}[H]
 	\vspace{0pt}
-	\includegraphics[width=\linewidth, keepaspectratio]{Snapshots/q5_1.png}
+	\includegraphics[height = 200pt, keepaspectratio]{Snapshots/q5_1.png}
 \end{figure}  
 Now, suppose that we do not have to return back to the same starting point but have to cross all the egdes exactly once, then, let us assume the starting and end points. Now, in between them, whenever we enter a node, we must exit it. So, whenever crossing any node by an edge, it must have 2 unvisited edges, if we do not want to cross the visited edges again. Thus, any node in between the start and end points must have even degree.
 That is, there can be exactly 2 nodes with odd degree (start and end) and rest all must have even degree. 
@@ -119,7 +161,7 @@ Now, to make such a path possible, we have to add \textbf{minimum} 2 bridges as 
 The path is also highlighed, which starts from A and ends on A, taking edges numbered 1 first, 2 then, and so on. 
 \begin{figure}[H]
 	\vspace{0pt}
-	\includegraphics[width=\linewidth, keepaspectratio]{Snapshots/q5_2.png}
+	\includegraphics[height = 150pt, keepaspectratio]{Snapshots/q5_2.png}
 \end{figure} 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Problem 6: Best route for Delhi metro passenger:}
