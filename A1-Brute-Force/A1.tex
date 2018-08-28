@@ -1,0 +1,111 @@
+\documentclass[12pt]{report}
+\usepackage{graphicx, float, algorithm2e}
+\usepackage[export]{adjustbox}
+
+\title{\centering CSL351: Analysis and Design of Algorithms \\Assignment No. 1}
+\author{\LARGE Sahil\\2016UCS0008}
+
+% to use proper section numbering in the report type 
+\renewcommand{\thesection}{\arabic{section}}
+
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem 1: Water-Jug problem:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem 2: Euclid's Game:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem 3: Eight-queens problem:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem 4: Farmer-Goat-Wolf puzzle:}
+The problem states that a farmer has to transport a wolf, a goat and a bale of grass to the other side of the river  in his boat, given the condition that the boat can carry the farmer along with one other item. In his absence, the wolf eats the goat and the goat eats the cabbage. 
+\\\\
+So, we first try to think what possibilities we have in the first step. If the wolf is taken with farmer, the goat eats the cabbage OR if the grass is taken to the other side, the wolf eats the goat. So, the only possibilty we have is to take the goat with the farmer. 
+\\\\
+Let \textbf{S1} refer to the other side of the river where we need to transport all of them, \& S2 be the current side of the river. 
+\\\\
+\textbf{After Step 1 : Farmer \& Goat on S1} and \textbf{Wolf, Grass on S2} 
+\\\\ 
+Now, the farmer should alone go back to S2 as if the goat goes with him back, then it leads us back to the original state.
+\\ 
+\textbf{After Step 2: Goat on S1} and \textbf{Farmer, Wolf, Grass on S2}
+\\\\
+Currently, he can take either of Wolf and Grass to S1, let us consider taking Wolf on the other side. 
+\\ 
+\textbf{After Step 3: Goat, Wolf \& Farmer on S1} and \textbf{Grass on S2}
+\\\\
+Note that in the presence of the farmer the Wolf can't eat the Goat, so this configuration is perfectly valid. But, we can't go alone to S2, so he has to take either of them back to S2. Let us consider taking Goat back to S2. 
+\\
+\textbf{After Step 4: Wolf on S1} and \textbf{Farmer, Goat \& Grass on S2}
+\\\\
+This time he takes grass with him to S1, since Wolf can't eat the grass.
+\\
+\textbf{After Step 5: Wolf, Grass \& Farmer on S1} and \textbf{Goat on S2}
+\\\\
+Now, he goes back alone to S2 and brings Goat also to S1 reaching the final state. 
+\\
+\textbf{After Step 6: Wolf \& Grass on S1} and \textbf{Farmer \& Goat on S2}
+\\
+\textbf{After Step 7: Wolf, Grass, Farmer \& Goat on S1}. This is the final state we wanted to achieve. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem 5: Konigsberg bridges puzzle:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem 6: Best route for Delhi metro passenger:}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem 7: Door-toggle puzzle:}
+There are \textbf{n} doors and initially all of them are closed. On the i-th pass, the door of every i-th switch is toggled. We need to find which doors will be open and which will be closed at the end of n-passes.  
+\\ \\
+We can write the following \textbf{brute force} algorithm to solve this problem:
+\\ \\
+\begin{algorithm}[H]
+	\SetAlgoLined
+	let \textbf{switch} = array of size n initialized with all 0's \; 
+	// zero represents closed door and one represents open door \\
+	\For{$i\gets 1$ \KwTo $n$}{
+		// i represents the current pass, so every i-th door is toggled \\
+		$j\gets i$ \;
+		// j represents the current door which we increment by i \\
+		\While{$j <= n$}{
+			// toggle the j-th door \\
+			\eIf{switch[j] equals 0}{
+				$ switch[j] \gets 1 $
+			}{
+				$ switch[j] \gets 0 $
+			}
+			$ j = j + i $
+		}
+	}
+	\caption{Door-toggle puzzle Brute force}	
+\end{algorithm}
+At the end of the algorithm, we can easily check which doors are open and close by simply looking at the \textbf{switch} array, if the $j^{th}$ entry is 1, that means that door is open, otherwise it is closed.
+\\ \\ 
+If we run this algorithm, we can observe that all those doors whose numbers are \textbf{prefect squares} will be opened, whereas others will be closed. We can easily prove why this happens. 
+\\ \\
+\textbf{Claim: } Only those doors whose numbers are perfect squares will be open.
+\\
+\textbf{Proof: } \\
+Let us consider a door numbered $x$. Since at $i^{th}$ pass, we toggle all doors which are multiples of $i$, thus the door $x$ will be toggled only in those passes which are factors of $x$. For eg. door $10$ will be toggled in $1^{st}$, $2^{nd}$, $5^{th}$ and $10^{th}$ passes. 
+\\ 
+Thus, any door $x$ will be toggled by no. of times equal to the no. of factors of $x$. 
+\\ 
+And, since all the doors are closed initially, any door which is toggled \textbf{even} no. of times, will remain closed, whereas the one which is toggled \textbf{odd} no. of times will be open at the end. 
+\\
+We can calculate the no. of factors of any number $x$, if we know its prime factorization. Let:
+\[ x = p^{\alpha}.q^{\beta}.\ ...\ .r^{\gamma} \]
+where $p$, $q$, ... , $r$ are primes, and $\alpha$, $\beta$, ... , $\gamma$ are positive integers. 
+Then, no. of factors of $x$ = 
+\[ (1 + \alpha)(1 + \beta)...(1 + \gamma) \]
+
+So, $x$ will have even no. of factors when, either of the multiplication term in above expression is even, i.e. either of $\alpha$, $\beta$,...,$\gamma$ is odd. In other words, it will be odd when none of the terms is even, i.e. all $\alpha$, $\beta$,..., $\gamma$'s are even. 
+Since in any \textbf{perfect square no.}, all the powers of the prime numbers in the factorization must be even, thus they always have odd no. of factors. 
+\\ \\
+Hence, all the doors with perfect square number will be open at the end and the rest will be closed. 
+\end{document}
