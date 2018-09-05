@@ -1,0 +1,65 @@
+\documentclass[12pt]{report}
+\usepackage{graphicx, float, algorithm2e}
+\usepackage[export]{adjustbox}
+
+\title{\centering CSL351: Analysis and Design of Algorithms \\Assignment No. 2}
+\author{\LARGE Sahil\\2016UCS0008}
+
+% to use proper section numbering in the report type 
+\renewcommand{\thesection}{\arabic{section}}
+
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem 1: Monotonically increasing functions:}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem 2: Identifying matching pair of socks:}
+The smallest no. of gloves required to have atleast one matching pair in the best case is $2$ since we might end up picking the pair when we pick up the first two socks. 
+\\ 
+In the worst case, we need to pick atleast 10 socks to ensure that we pick atleast one matching pair. This is because there are 4 pair of red socks, 4 pairs of yellow and 1 pair of green. So, we might end up picking one sock from each pair during the first 9 times, i.e. we have 9 socks each from all 9 different pairs, so during the 10th time, we will obviously have 1 sock picked which forms a pair with the already picked ones. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem 3: Selection sort analysis:}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem 4: Asymptotical analysis of maximum of two functions:}
+It is given that $f(n)$ and $g(n)$ are asymptotically non-negative functions. We need to prove that 
+\[max\left \{ f(n), g(n) \right \} = \Theta (f(n) + g(n))\]
+\\
+Using the basic definition of $\Theta$ notation: 
+Let $f(n)$ and $g(n)$ be functions mapping positive integers to positive real numbers, we say that $f(n)$ is $\Theta(g(n))$ \textbf{iff} $f(n)$ is $O(g(n))$ and $f(n)$ is also $\Omega(g(n))$. 
+Now, $f(n)$ is $O(g(n))$ \textbf{iff} 
+\[\exists\ c > 0 \ \& \ n_{0} \geq 1 \ s.t. \ \forall n \geq n_{0}, \ f(n) \leq c \ g(n)\]
+So, first we show that $max\left \{ f(n), g(n) \right \}$ is $O(f(n) + g(n))$. 
+\\
+Since, $f(n) \leq f(n) + g(n)$ and $g(n) \leq f(n) + g(n)$, thus, 
+\[max\left \{ f(n), g(n) \right \} \leq f(n) + g(n) \ \forall n\]
+This is because $max\left \{ f(n), g(n) \right \}$ has to be either of the two $f(n)$ or $g(n)$ depending on which one is larger. 
+\\
+Thus, $max\left \{ f(n), g(n) \right \}$ is $O(f(n) + g(n))$ where $c = 1$ and $n_{0} = 1$.
+\\
+\\
+Now, we show that $max\left \{ f(n), g(n) \right \}$ is $\Omega(f(n) + g(n))$. 
+\\
+Since $f(n) \leq max\left \{ f(n), g(n) \right \}$ and $g(n) \leq max\left \{ f(n), g(n) \right \}$, thus, 
+\[f(n) + g(n) \leq max\left \{ f(n), g(n) \right \} + max\left \{ f(n), g(n) \right \}\]
+\[\Rightarrow f(n) + g(n) \leq 2*max\left \{ f(n), g(n) \right \}\]
+\[\Rightarrow max\left \{ f(n), g(n) \right \} \geq \frac{1}{2} (f(n) + g(n)) \ \forall n\]
+Thus, $max\left \{ f(n), g(n) \right \}$ is $\Omega(f(n) + g(n))$ where $c = 0.5$ and $n_{0} = 1$.
+\\ \\
+Having proved that $max\left \{ f(n), g(n) \right \}$ is $\Omega(f(n) + g(n))$ and also $O(f(n) + g(n))$, we can now conclude from the basic definition of $\Theta$ notation that, $max\left \{ f(n), g(n) \right \}$ is $\Theta(f(n) + g(n))$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem 5: Brute force method for maximum subarray problem:}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
