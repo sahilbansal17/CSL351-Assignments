@@ -14,18 +14,107 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Problem 1: Monotonically increasing functions:}
+It is given that $f(n)$ and $g(n)$ are monotonically increasing integer-valued functions. We need to prove whether $f(n) + g(n)$, $f(n)*g(n)$ and $f \circ g(n)$ are monotonically increasing or not. 
+\\ \\
+Since $f(n)$ and $g(n)$ are monotonically increasing functions, thus
+ \[\forall n_{1},n_{2} \ \ s.t. \ n_{1} \leq n_{2}, \ \ f(n_{1}) \leq f(n_{2}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \rightarrow \textcircled{1}\]
+\[\forall n_{1},n_{2} \ \ s.t. \ n_{1} \leq n_{2}, \ \ g(n_{1}) \leq g(n_{2}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \rightarrow \textcircled{2}\]
 
+\subsection{$f(n) + g(n)$}
+From $\textcircled{1}$ and $\textcircled{2}$, 
+\[\forall n_{1},n_{2} \ \ s.t. \ n_{1} \leq n_{2}, \ \ f(n_{1}) + g(n_{1}) \leq f(n_{2}) + g(n_{2}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \rightarrow \textcircled{3}\]
+From $\textcircled{3}$, we can conclude that $f(n) + g(n)$ is a monotonically increasing function. 
 
+\subsection{$f(n) * g(n)$}
+To check whether $f(n) * g(n)$ is a monotically increasing function, we \textbf{can't} directly multiply $\textcircled{1}$ and $\textcircled{2}$ and say that 
+\[\forall n_{1},n_{2} \ \ s.t. \ n_{1} \leq n_{2}, \ \ f(n_{1}) * g(n_{1}) \leq f(n_{2}) * g(n_{2})\]
+This is \textbf{not true} because it might be the case that $f(n_{1})$ and $g(n_{1})$ are both negative, and their product comes out to be larger than $f(n_{2}) * g(n_{2})$. Taking a concrete example: 
+\\
+Let $n_{1} \leq n_{2}$ and $f(n_{1}) = -1$, $g(n_{1}) = -10$, $f(n_{2}) = 1$, $g(n_{2}) = 5$, 
+\\
+We have $f(n_{1}) \leq f(n_{2})$ and $g(n_{1}) \leq g(n_{2})$, but $f(n_{1}) * g(n_{1}) \geq f(n_{2}) * g(n_{2})$.
+\\
+Thus, $\textbf{f(n) * g(n)}$ is not monotonically increasing function. To make it monotonically increasing, we must have $f(n) \geq 0$ and $g(n) \geq 0$. 
+
+\subsection{$f \circ g(n)$}
+From \textcircled{2}, we have $g(n_{1}) \leq g(n_{2})$, and since $f(n)$ is monotonically increasing, thus, $f(g(n_{1})) \leq f(g(n_{2}))$. Hence, $f \circ g(n)$ is a monotonically increasing function. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Problem 2: Identifying matching pair of socks:}
-The smallest no. of gloves required to have atleast one matching pair in the best case is $2$ since we might end up picking the pair when we pick up the first two socks. 
+\section{Problem 2: Identifying matching pair of gloves:}
+The smallest no. of gloves required to have atleast one matching pair in the best case is $2$ since we might end up picking the pair when we pick up the first two gloves. 
 \\ 
-In the worst case, we need to pick atleast 10 socks to ensure that we pick atleast one matching pair. This is because there are 4 pair of red socks, 4 pairs of yellow and 1 pair of green. So, we might end up picking one sock from each pair during the first 9 times, i.e. we have 9 socks each from all 9 different pairs, so during the 10th time, we will obviously have 1 sock picked which forms a pair with the already picked ones. 
+In the worst case, we need to pick atleast 10 gloves to ensure that we pick atleast one matching pair. This is because there are 4 pair of red gloves, 4 pairs of yellow and 1 pair of green. So, we might end up picking one glove from each pair during the first 9 times, i.e. we have 9 gloves each from all 9 different pairs, so during the 10th time, we will obviously have 1 glove picked which forms a pair with the already picked ones. 
+\\ \\
+\textbf{Psuedo code:}
+\\ \\ 
+\begin{algorithm}[H]
+	\SetAlgoLined
+	// Consider \textbf{red}, green, yellow = arrays of size \textbf{2} each \\
+	// red[0] = true means we have left glove of red color \\
+	// red[1] = true means we have right glove of red color \\
+	// similarly for each of the three arrays \\
+	// Intially, all the elements in the arrays are false \\
+	// n is the total number of glove pairs \\
+	$count \gets 0$ \;
+	// count is the number of steps taken to find matching pair \\
+	\For{$i\gets 1$ \KwTo $2*n$}{
+		Pick a random glove \;
+		Mark the appropriate element in the correct color array as true \;
+		\If{Opposite glove of same color exists}{
+			// we have find the matching pair \\
+			return ; 
+		}
+		$count \gets count + 1$ \;
+	}
+	\caption{Matching pair of gloves problem}	
+\end{algorithm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Problem 3: Selection sort analysis:}
 
+\subsection{Pseudocode:}
+\begin{algorithm}[H]
+	\SetAlgoLined
+	Consider \textbf{a} = input array of size n \;
+	// Assuming array to be 0-indexed \\ 
+	\For{$i\gets 0$ \KwTo $n - 2$}{
+		$min\_index\gets i$ \;
+		// min\_index represents the index at which minimum element \\
+		// of sub-array starting from i-th index occurs \\
+		\For{$j \gets i + 1$ \KwTo $n - 1$}{
+			\If{$a[j] < a[min\_index]$}{
+				min\_index = j \;
+			}
+		}
+		swap($a[i], a[min\_index]$) \;
+	}
+	\caption{Selection sort}	
+\end{algorithm}
+\subsection{Loop invariant:}
+During end of each iteration of the outer loop on $i$, the element at $i-th$ index of the array is occupied by the correct element which would have been at that index when the array was sorted in non-decreasing order.
+\\ \\ 
+We can prove this by strong induction on $i$. 
+\\
+\textbf{Base case: } When $i = 0$, the inner loop on $j$ finds the entire minimum element of the array and at the end, it is swapped with the first index element of the array, thus the first element in the array is the minimum element after the first iteration is over. 
+\\
+\textbf{Inductive case:} We assume that the loop invariant holds for all $i$ from $0$ to $k - 1$. Thus, the first $k$ positions in the array are occupied by the $k$ smallest numbers in the array. 
+\\
+Now, we need to show that this holds for $i = k$. So, i.e. in the $(k+1)-th$ iteration, we need to show that the correct element will occupy the $k-th$ index of the array as in sorted order. 
+\\
+Clearly, the inner loop finds the minimum value of the array from indices $k$ to $n - 1$, which must be the $(k + 1)$th smallest element of the array since $k$ smallest numbers are already present in previous indices as per hypothesis. Thus, this element gets swapped and occupies the correct position. 
+\\ \\
+Hence, our loop invariant is verified. 
+
+\subsection{Runs for first $n - 1$ elements:}
+It need to run only for the first $n - 1$ elements since after the first $n - 1$ iterations, the first $n - 1$ elements in the array will be correctly occupied by elements as in the sorted array. This holds true by using the loop invariant. So, the last element must obviously be in the correct sorted order as it has no other place left in the array. 
+
+\subsection{Best-case running time:}
+In the best case we might end up doing zero swaps. So, this will be the case when the array is already sorted in non-decreasing order. Still, we will be doing $n - i - 1$ comparisons in each run of the outer loop of $i$. Thus, total no. of comparisons = 
+\[\sum_{i = 0}^{n - 2} n - i - 1 = n(n - 1) - \frac{(n - 2)(n - 1)}{2} - (n - 1) = \frac{n(n - 1)}{2}\]
+Thus, best case running time is $\Theta(n^{2})$.
+
+\subsection{Worst-case running time:}
+In the worst case we might end up doing some swaps and assignments also. Since we can perform atmost one swap in each iteration over $i$, thus, we cannot do more than $\Theta(n)$ swaps. Also, we do assignments to the variable \textbf{min\_index} only when the comparison resulted in true. Since there are $\Theta(n^{2})$ comparisons, thus there cannot be more than $\Theta(n^{2})$ assignments. Thus, the overall complexity in the worst case is $\Theta(n^{2})$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Problem 4: Asymptotical analysis of maximum of two functions:}
@@ -57,8 +146,34 @@ Having proved that $max\left \{ f(n), g(n) \right \}$ is $\Omega(f(n) + g(n))$ a
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Problem 5: Brute force method for maximum subarray problem:}
+In the maximum subarray problem, we are given an array \textbf{A} consisting of \textbf{n} integers. We have to find the non-empty, contiguous sub array of \textbf{A} which has the largest sum of elements. 
+\\ \\
+So, the brute force algorithm is to check the sum of all the sub arrays and find which one has the largest sum. Let us denote the starting index of a subarray by \textbf{start} and ending index of a subarray by \textbf{end}. Clearly, there are $\frac{n(n - 1)}{2}$ subarrays possible. Thus, if we can find sum of each subarray in $\Theta(1)$, our algorithm would have time complexity of $\Theta(n)$. 
+\\
+To do so, we can keep the \textbf{start} variable fixed for a iteration, and move the \textbf{end} variable till the size of the array, and keep on incrementing the sum of the subarray from $[start, end]$ where \textbf{end} is varying. Now, after \textbf{end} cannot vary further, we then increment \textbf{start} and again make \textbf{end} vary from the position after \textbf{start} by initializing the sum to zero and keep on incrementing sum and checking whether it exceeds maximum sum. 
+\\ \\ The pseudo code for the above algorithm thus is: 
 
+\begin{algorithm}[H]
+	\SetAlgoLined
+	Consider \textbf{a} = input array of size \textbf{n} \;
+	// Assuming array to be 0-indexed \\ 
+	$max\_sum \gets 0$ \;
+	\For{$start\gets 0$ \KwTo $n - 1$}{
+		$end\gets start$ \;
+		$current\_sum \gets 0$ \;
+		\While{$end < n$}{
+			$current\_sum \gets current\_sum + a[end]$ \;
+			\If{$current\_sum > max\_sum$}{
+				$max\_sum \gets current\_sum$ \;
+			}
+			$end \gets end + 1$ \;
+		}
+	}
+	// max\_sum variable now contains the maximum sum of subarray
+	\caption{Maximum sub-array problem}	
+\end{algorithm}
 
+The above algorithm runs in $\Theta(n^{2})$ time. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
