@@ -9,7 +9,7 @@ bool done[4] = {false};
 void assign (int i, int c) {
     if (i == n) {
         if (c < min_cost) {
-            cout << c << endl;
+            // cout << c << endl;
             min_cost = c;
         }
         return ;
@@ -26,6 +26,6 @@ void assign (int i, int c) {
 int main() {
     n = 4;
     assign (0, 0);
-    cout << min_cost;
+    cout << "The minimum assignment cost is: " << min_cost << endl;
     return 0;
 }
