@@ -54,6 +54,12 @@ bool sortFunct(pair < pair <int, int>, int> p1, pair < pair <int, int>, int> p2)
 
 int main () {
     
+    #ifndef ONLINE_JUDGE
+    freopen("/Users/sahilbansal/Desktop/input.txt","r",stdin);
+    freopen("/Users/sahilbansal/Desktop/output.txt","w",stdout);
+    freopen("/Users/sahilbansal/Desktop/error.txt", "w",stderr);
+    #endif
+    
     int no_of_hostels, no_of_roads_planned, no_of_roads_to_construct;
     scanf("%d %d %d", &no_of_hostels, &no_of_roads_planned, &no_of_roads_to_construct);
 
